@@ -167,16 +167,6 @@ class AddressBook(UserDict):
                         }
                     writer.writerow(data)
 
-                    # if len(contact.phones) == 1 and contact.birthday:
-                    #     writer.writerow({'User name': contact.name.value, 'User phone-1': contact.phones[0],
-                    #                  'User phone-2': None, 'User birthday': contact.birthday})
-                    # elif len(contact.phones) == 1 and not contact.birthday:
-                    #     writer.writerow({'User name': contact.name.value, 'User phone-1': contact.phones[0],
-                    #                  'User phone-2': None, 'User birthday': None})
-                    # else:
-                    #     writer.writerow({'User name': contact.name.value, 'User phone-1': contact.phones[0],
-                    #                  'User phone-2': contact.phones[1], 'User birthday': contact.birthday})
-
     def open_record_from_file(self):
         with open('user_book.csv', 'r') as ub:
             reader = csv.DictReader(ub)
@@ -210,7 +200,6 @@ if __name__ == '__main__':
     record_1 = Record(name, phone_1, birthday)
     record_2 = Record(name_1, phone_1, birthday)
     record_3 = Record(name_2, phone_3, birthday)
-    # print(record_1)
 
     # Method add_phone
     record_1.add_phone(phone_2)
@@ -244,7 +233,7 @@ if __name__ == '__main__':
     find_data = '123'
 
     find_dict = new_user_dict.search(find_data)
-    print(find_dict)
+    # print(find_dict)
 
 
     # user_dict.save_record_to_file()

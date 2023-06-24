@@ -1,4 +1,5 @@
 from classes import *
+from output_information import *
 
 
 # Перевірка чи файл адресної книги існує
@@ -42,18 +43,19 @@ def greetings():
 def user_adding(user_name, user_phone):
     user_name = Name(user_name)
     user_phone = Phone(user_phone)
+
     if user_name.value in users.data:
         record = users.pop(user_name.value)
         record.add_phone(user_phone)
         users.add_record(record)
-        # users.save_record_to_file(record)
-        return f'For user {user_name} added new phone number {user_phone}'
+        result = MessageUserAdding()
+        return result.message(record)
+
     else:
         record = Record(user_name, user_phone)
         users.add_record(record)
-        # users.save_record_to_file(record)
-        return f'User {user_name} with number {user_phone} successfully added'
-
+        result = MessageUserAdding()
+        return result.message(record)
 
 @input_error
 def phone_changing(user_name, user_phone_new):
@@ -65,10 +67,12 @@ def phone_changing(user_name, user_phone_new):
         record = users.pop(user_name.value)
 
         if len(record.phones) == 1:
+            user_phone_old = record.phones[0]
             record.change_phone(record.phones[0], user_phone_new)
             users.add_record(record)
-            return f'For user {user_name} number {record.phones[0]} ' \
-                   f'successfully changed to new number {user_phone_new}'
+            result = MessagePhoneChanging()
+            return result.change_and_print(record, user_phone_old)
+
         else:
             for phone in record.phones:
                 phones_num += str(phone) + '; '
@@ -76,9 +80,8 @@ def phone_changing(user_name, user_phone_new):
             user_phone_old = Phone(input(f'Write number should be changed >>> '))
             record.change_phone(user_phone_old, user_phone_new)
             users.add_record(record)
-
-            return f'For user {user_name} number {user_phone_old} ' \
-                   f'successfully changed to new number {user_phone_new}'
+            result = MessagePhoneChanging()
+            return result.change_and_print(record, user_phone_old)
 
 
 @input_error
@@ -90,41 +93,26 @@ def delete(user_name, user_phone):
 
         record.delete_phone(user_phone)
         users.add_record(record)
-        return f'For user {user_name.value} phone number {user_phone} successfully deleted'
+        result = MessageDeletePhone()
+        return result.change_and_print(record, user_phone)
 
 
 @input_error
 def phone_shower(user_name):
     user_name = Name(user_name)
-    phones_num = ''
-    user_phone = users.get(user_name.value)
-
-    if len(user_phone.phones) == 1:
-        return f"User {user_name.value} have phone number: {user_phone.phones[0]}"
-    elif len(user_phone.phones) == 0:
-        return f"User {user_name.value} haven't phone number"
-    else:
-        for phone in user_phone.phones:
-            phones_num += str(phone) + '; '
-        return f"User {user_name.value} have phone number's: {phones_num.removesuffix('; ')}"
+    record = users.get(user_name.value)
+    result = MessageShowRecords()
+    return result.message(record)
 
 
 def show_all():
-    all_user = ''
-    phones_num = ''
-    # page_counter = 0
+    all_users = ''
 
     for book_page in users:
-        # page_counter += 1
         for records in book_page:
-            if len(records.phones) == 1:
-                all_user += f'User {records.name} phone number: {records.phones[0]} birthday {records.birthday}\n'
-            else:
-                for phone in records.phones:
-                    phones_num += str(phone) + '; '
-                all_user += f"User {records.name} phone number's: {phones_num.removesuffix('; ')}" \
-                            f" birthday {records.birthday}\n"
-    return all_user
+            result = MessageShowRecords()
+            all_users += result.message(records)
+    return all_users
 
 
 @input_error
@@ -135,7 +123,8 @@ def add_birthday(user_name, birthday_date):
         record = users.pop(user_name.value)
         record.birthday = birthday_date
         users.add_record(record)
-        return f'For user {user_name} added birthday date {birthday_date}'
+        result = MessageAddBirthday()
+        return result.message(record)
 
 
 def days_to_bd(user_name):
@@ -146,18 +135,13 @@ def days_to_bd(user_name):
 
 def finder(user_data: str):
     founded_data = users.search(user_data)
-    all_user = ''
-    phones_num = ''
-    for records in founded_data.values():
-        if len(records.phones) == 1:
-            all_user += f'User {records.name} phone number: {records.phones[0]} birthday {records.birthday}\n'
-        else:
-            for phone in records.phones:
-                phones_num += str(phone) + '; '
-            all_user += f"User {records.name} phone number's: {phones_num.removesuffix('; ')}" \
-                        f" birthday {records.birthday}\n"
+    all_users = ''
 
-    return all_user
+    for records in founded_data.values():
+        result = MessageShowRecords()
+        all_users += result.message(records)
+    return all_users
+
 
 
 COMMANDS = {
