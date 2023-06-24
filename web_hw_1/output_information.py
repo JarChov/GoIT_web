@@ -2,34 +2,34 @@ from abc import abstractmethod, ABC
 from classes import Record, Phone
 
 
-class ShowInfo(ABC):
+class ShowedInfo(ABC):
     @abstractmethod
     def message(self, record: Record):
         pass
 
 
-class ChangeAndShowInfo(ABC):
+class ChangedAndShowedInfo(ABC):
     @abstractmethod
     def change_and_print(self, record: Record, phone: Phone):
         pass
 
 
-class MessageUserAdding(ShowInfo):
+class MessageUserAdding(ShowedInfo):
     def message(self, record: Record):
         return f'For user {record.name.value} added phone number {record.phones[-1]}'
 
 
-class MessagePhoneChanging(ChangeAndShowInfo):
+class MessagePhoneChanging(ChangedAndShowedInfo):
     def change_and_print(self, record: Record, phone: Phone):
         return f'For user {record.name.value} number {phone} successfully changed to new number {record.phones[-1]}'
 
 
-class MessageDeletePhone(ChangeAndShowInfo):
+class MessageDeletePhone(ChangedAndShowedInfo):
     def change_and_print(self, record: Record, phone: Phone):
         return f'For user {record.name.value} phone number {phone} successfully deleted'
 
 
-class MessageShowRecords(ShowInfo):
+class MessageShowRecords(ShowedInfo):
     def message(self, record: Record):
         phones_num = ''
 
@@ -44,10 +44,10 @@ class MessageShowRecords(ShowInfo):
                    f" birthday {record.birthday}\n"
 
 
-class MessageAddBirthday(ShowInfo):
+class MessageAddBirthday(ShowedInfo):
     def message(self, record: Record):
         return f'For user {record.name.value} added birthday date {record.birthday}'
 
 
-class MessageDaysToBirthday(ShowInfo):
+class MessageDaysToBirthday(ShowedInfo):
     pass
