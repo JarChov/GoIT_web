@@ -2,18 +2,7 @@ from collections import UserDict
 from datetime import datetime
 import re
 import csv
-
-
-class WrongName(Exception):
-    pass
-
-
-class WrongPhone(Exception):
-    pass
-
-
-class WrongBd(Exception):
-    pass
+from errors import WrongName, WrongPhone, WrongBd
 
 
 class Field():

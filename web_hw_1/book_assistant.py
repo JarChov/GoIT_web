@@ -1,5 +1,6 @@
-from classes import *
+from classes import AddressBook, Name, Birthday
 from output_information import *
+from errors import WrongName, WrongPhone
 
 
 # Перевірка чи файл адресної книги існує
@@ -56,6 +57,7 @@ def user_adding(user_name, user_phone):
         users.add_record(record)
         result = MessageUserAdding()
         return result.message(record)
+
 
 @input_error
 def phone_changing(user_name, user_phone_new):
