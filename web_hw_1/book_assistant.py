@@ -1,5 +1,6 @@
-from classes import AddressBook, Name, Birthday
-from output_information import *
+from classes import AddressBook, Name, Birthday, Phone, Record
+from output_information import MessageUserAdding, MessageAddBirthday, MessagePhoneChanging
+from output_information import MessageDeletePhone, MessageShowRecords
 from errors import WrongName, WrongPhone
 
 
