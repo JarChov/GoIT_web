@@ -1,4 +1,4 @@
-FROM python:3.9
+FROM python:3.10
 
 COPY . /app
 WORKDIR /app
@@ -8,4 +8,4 @@ COPY pyproject.toml poetry.lock /app/
 
 RUN poetry install
 
-CMD ["poetry", "run", "python", "book_assistant.py"]
+CMD ["poetry", "run", "python", "web_hw_1_2/book_assistant.py"]
