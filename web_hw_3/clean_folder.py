@@ -124,17 +124,7 @@ def delete_folder() -> None:
 
 def main() -> None:
     path = Path(sys.argv[1])
-    # output_dir = path
     folders_finder(path)
-    # folders.append(path)
-    #
-    # threads = []
-    # for folder in folders:
-    #     th = Thread(target=file_mover, args=(folder, path,))
-    #     th.start()
-    #     threads.append(th)
-    #
-    # [th.join() for th in threads]
 
     copied_files()
     delete_folder()
