@@ -38,8 +38,12 @@ def folders_finder(path: Path):
                 folders.append(element)
                 folders_finder(element)
         else:
+            threads = []
             th = Thread(target=file_mover, args=(element, path,))
             th.start()
+            threads.append(th)
+
+            [th.join() for th in threads]
             # file_mover(element, path)
 
 
@@ -124,7 +128,17 @@ def delete_folder() -> None:
 
 def main() -> None:
     path = Path(sys.argv[1])
+    # output_dir = path
     folders_finder(path)
+    # folders.append(path)
+    #
+    # threads = []
+    # for folder in folders:
+    #     th = Thread(target=file_mover, args=(folder, path,))
+    #     th.start()
+    #     threads.append(th)
+    #
+    # [th.join() for th in threads]
 
     copied_files()
     delete_folder()
