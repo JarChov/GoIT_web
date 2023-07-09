@@ -60,7 +60,7 @@ def file_mover(file: Path, output_dir: Path) -> None:
                 new_dir = output_dir / key / extension
                 new_dir.mkdir(exist_ok=True, parents=True)
                 if file_extension in files_manager['archives']:
-                    archive_name = normalize(str(file.name.removesuffix('.zip' or '.tar' or '.gz')))
+                    archive_name = normalize(str(file.name.removesuffix('.zip' or '.tar' or '.gz' or '7z')))
                     archive_dir = output_dir / key / archive_name
                     archive_dir.mkdir(exist_ok=True, parents=True)
                     archive_extractor(file, archive_dir)
@@ -128,17 +128,7 @@ def delete_folder() -> None:
 
 def main() -> None:
     path = Path(sys.argv[1])
-    # output_dir = path
     folders_finder(path)
-    # folders.append(path)
-    #
-    # threads = []
-    # for folder in folders:
-    #     th = Thread(target=file_mover, args=(folder, path,))
-    #     th.start()
-    #     threads.append(th)
-    #
-    # [th.join() for th in threads]
 
     copied_files()
     delete_folder()
