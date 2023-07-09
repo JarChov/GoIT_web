@@ -1,6 +1,5 @@
 import time
 from multiprocessing import cpu_count, Pool
-from threading import Thread
 
 
 def factorize_synch(*numbers):
